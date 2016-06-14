@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.earlybirdcamp.EarlyBirdApp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.TaskListActivity" />
+        <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.TaskActivity" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="8526738dddb25640eb2d7e77f365f529d12e92cd" />
+
+        <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.TwitterTimelineActivity"></activity>
+    </application>
+
+</manifest>
