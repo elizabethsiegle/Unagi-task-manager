@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 // with your app's user model
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                // Comment added by Edwin lmaoooo
             }
             @Override
             public void failure(TwitterException exception) {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         // Make sure that the loginButton hears the result from any
         // Activity that it triggered.
         loginButton.onActivityResult(requestCode, resultCode, data);
-        // Comment added by Edwin lmaoooo
+
     }
 
 }
