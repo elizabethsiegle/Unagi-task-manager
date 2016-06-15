@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RecyclerViewExample.iml" filepath="$PROJECT_DIR$/RecyclerViewExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EarlyBirdApp.iml" filepath="$PROJECT_DIR$/EarlyBirdApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
