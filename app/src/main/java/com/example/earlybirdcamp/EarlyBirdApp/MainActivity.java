@@ -17,7 +17,6 @@ import com.twitter.sdk.android.core.*;
 import io.fabric.sdk.android.Fabric;
 
 // @author  Tuan Anh Tran added
-//@ John Doe
 
 
 public class MainActivity extends AppCompatActivity {
