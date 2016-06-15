@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 // with your app's user model
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                // Comment added by Edwin lmaoooo
+                // Comment added by Edwin lmaoooo00 pls work
             }
             @Override
             public void failure(TwitterException exception) {
