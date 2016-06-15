@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         // Make sure that the loginButton hears the result from any
         // Activity that it triggered.
         loginButton.onActivityResult(requestCode, resultCode, data);
+        // Comment added by Edwin lmaoo
     }
 
 }
