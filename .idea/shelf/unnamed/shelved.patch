@@ -1,0 +1,33 @@
+Index: EarlyBirdUnagiApp2/.idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- EarlyBirdUnagiApp2/.idea/modules.xml	(revision 59f0674b0a1ec6efea68d89f3ce6a3d582b561d9)
++++ EarlyBirdUnagiApp2/.idea/modules.xml	(revision )
+@@ -2,6 +2,8 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
++      <module fileurl="file://$PROJECT_DIR$/EarlyBirdUnagiApp2.iml" filepath="$PROJECT_DIR$/EarlyBirdUnagiApp2.iml" />
++      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+     </modules>
+   </component>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(date 1465974036000)
++++ .idea/modules.xml	(revision )
+@@ -2,6 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
++      <module fileurl="file://$PROJECT_DIR$/EarlyBirdApp.iml" filepath="$PROJECT_DIR$/EarlyBirdApp.iml" />
+       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+     </modules>
+   </component>
+\ No newline at end of file

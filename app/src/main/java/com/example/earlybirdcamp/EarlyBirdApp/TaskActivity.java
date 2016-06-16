@@ -1,5 +1,6 @@
 package com.example.earlybirdcamp.EarlyBirdApp;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 
 
@@ -49,8 +47,9 @@ public class TaskActivity extends AppCompatActivity{
 
 
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Spinner spin = (Spinner) findViewById(R.id.priority_spinner);
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                Dialog dialog = (Dialog) dialogInterface;
+                                Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
                                 String[]  array_name = getResources().getStringArray(R.array.priority_array);
 
                                 ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(TaskActivity.this, android.R.layout.simple_spinner_item, array_name);
