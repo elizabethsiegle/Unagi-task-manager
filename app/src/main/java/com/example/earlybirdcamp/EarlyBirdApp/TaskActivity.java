@@ -3,6 +3,7 @@ package com.example.earlybirdcamp.EarlyBirdApp;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -194,6 +195,11 @@ public class TaskActivity extends AppCompatActivity{
                                 // public Task(String title, String desc, int days, Date due_date) {
                                 //Task new_task = new Task(String title, String desc, int days, Date due_date);
                                 //
+
+                                String tweetUrl = "https://twitter.com/intent/tweet?text=Just Completed " + taskName + "!! %23Unagi";
+                                Uri uri = Uri.parse(tweetUrl);
+                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+
                                 Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
                                 //String text = spin.getSelectedItem().toString();
