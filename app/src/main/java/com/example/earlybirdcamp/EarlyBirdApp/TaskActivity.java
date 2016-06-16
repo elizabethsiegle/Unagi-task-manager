@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -23,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /*
        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -37,25 +42,94 @@ get */
 
 
 public class TaskActivity extends AppCompatActivity{
+/************************************ VARIABLES *********************************************/
+    private RecyclerView taskRecyclerView;
+    private TaskAdapter adapter;
     ArrayList<Task> tasksLists;
 
-    private String user;
     private static final String TAG = "TaskActivity";
 
-//    public SimpleDateFormat getDueDate(int days){
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        Calendar c =  Calendar.getInstance();
-//
-//        return
-//    }
+ /************************************** TASK HOLDER *******************************************/
+ /*
+    Functionality: ViewHolder-Recyclerview
+    Purpose: to hold the view for one single task. Note: for now it only has the taskName
+  */
+    private  class TaskHolder extends  RecyclerView.ViewHolder{
+        public TextView taskName;
 
+        public  TaskHolder(View itemView){ //--> Constructor for a TaskHolder, notice how it takes
+            super(itemView);                // --> a View element, this constructor will be called
+            taskName = (TextView)itemView; //--> in the adapter. Remember that the adapter's job
+        }                               // --> is to inflate/draw a taskHolder element
+
+        //@Override  --> we might need this override
+        public void onClick(View v) {
+                //-->> ADD CODE HERE: what happens when the user clicks on a task
+        }
+    }
+
+    /************************************** ADAPTER *******************************************/
+    private  class TaskAdapter extends  RecyclerView.Adapter<TaskHolder>{
+
+        private ArrayList<Task> tasksList;  //-->list containing all the user's tasks
+
+
+        public  TaskAdapter(ArrayList<Task> tasks){//-->constructor, notice that it takes
+            tasksList = tasks;                  // --> an ArrayList argument
+        }
+ //------------------------------------ BindHolder --------------------------------------------
+    /* PURPOSE: to create/instantiate a Task Holder (remember a taskholder only holds 1 task)   */
+        @Override
+        public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType){
+            LayoutInflater layoutInflater = getLayoutInflater(); //--> create/instantiate an inflater,
+                                                                //--> so you can draw an element
+            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent,false);
+            return new TaskHolder(view); // --> Here's where you use the taskHolder constructor,
+        }
+      /* NOTE: At this point you have inflated/drawn the cell that holds the task, but you haven't populated
+       the cell with information yet. That's what the onBingViewHolder is for. */
+
+//--------------------------------- BindHolder --------------------------------------------
+    /*PURPOSE: To populate the taskHolder with information  */
+        @Override
+        public void onBindViewHolder(TaskHolder holder, int position){
+            Task task = tasksList.get(position);
+            holder.taskName.setText(task.getTaskName());
+        }
+ //-------------------------------- getItemsCount --------------------------------------------
+     /*PURPOSE: to return the number of elemtnts in the list */
+        @Override    // --> returns the item count
+        public int getItemCount(){
+            return tasksList.size();
+        }
+
+    }
+
+
+
+    /***************************UPDATE USER INTERFACE *******************************************/
+
+    /*PURPOSE: to rerender the data everytime there is a change and to initialize the adapter  */
+    private void updateUI(){
+        // fetch data from firebase here to update the list
+        //ArrayList<Task> tasks = tasksLists;
+        adapter = new TaskAdapter(tasksLists);
+        taskRecyclerView.setAdapter(adapter);
+
+
+    }
+    /********************************* ONCREATE *******************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-        Intent intent = getIntent();
-        tasksLists = new ArrayList<Task>();
-        user = intent.getStringExtra("user");
+
+        // -----Code added
+        tasksLists = new ArrayList<Task>();  //--> instantiate our arraylist for tasks
+        taskRecyclerView  = (RecyclerView) findViewById(R.id.recycler_view); //--> instantiate the reccler view
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // --> sets the linear LayourManager
+        updateUI();  //--> initializes the adapter
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,7 +175,7 @@ public class TaskActivity extends AppCompatActivity{
 
 
                                 // public Task(String title, String desc, int days, Date due_date) {
-                                //Task new_task = new Task();
+                                //Task new_task = new Task(String title, String desc, int days, Date due_date);
                                 //
                                 Toast.makeText(TaskActivity.this, "this is my Toast message!!! =) " + select, Toast.LENGTH_LONG).show();
 

@@ -3,7 +3,7 @@ package com.example.earlybirdcamp.EarlyBirdApp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
+/*
  * Created by earlybirdcamp on 6/14/16.
  */
 public class Task {
@@ -11,14 +11,15 @@ public class Task {
     private String taskName;
     private String desc;
     private int days;
-   // private Date due_date;
-    private SimpleDateFormat due_date;
 
-    public Task(String taskName, String desc, int days, SimpleDateFormat due_date) {
+   // private Date due_date;
+   // private SimpleDateFormat due_date;
+
+    public Task(String taskName, String desc, int days) {
         this.taskName = taskName;
         this.desc = desc;
         this.days = days;
-        this.due_date = due_date;
+       // this.due_date = ;
     }
 
     public String getTaskName() {
@@ -45,11 +46,11 @@ public class Task {
         this.days = days;
     }
 
-    public SimpleDateFormat getDue_date() {
-        return due_date;
-    }
-
-    public void setDue_date(SimpleDateFormat due_date) {
-        this.due_date = due_date;
-    }
+//    public SimpleDateFormat getDue_date() {
+////        return due_date;
+////    }
+//
+//    public void setDue_date(SimpleDateFormat due_date) {
+//        this.due_date = due_date;
+//    }
 }
