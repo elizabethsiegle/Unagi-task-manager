@@ -36,19 +36,24 @@ public class TaskActivity extends AppCompatActivity{
                 final AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new task")
                         .setMessage("What do you want to do next?")
-                        //.setView(taskEditText)
+                        // this is how The Dialog is gonna look
                         .setView(R.layout.special_dialog)
+                         // set the functionality of a button/ what the button is gonna be user for
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
                                 Dialog dialog = (Dialog) dialogInterface;
                                 Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
+
+                                // we need these values for later use: Low, Medium, High
                                 String[]  array_name = getResources().getStringArray(R.array.priority_array);
 
-                                ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(TaskActivity.this, android.R.layout.simple_spinner_item, array_name);
-                                adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spin.setAdapter(adapter_state);
+                                //
+//                                ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(TaskActivity.this, android.R.layout.simple_spinner_item, array_name);
+//
+//                                adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                                spin.setAdapter(adapter_state);
 
                                 Toast.makeText(TaskActivity.this, "this is my Toast message!!! =)",
                                         Toast.LENGTH_LONG).show();

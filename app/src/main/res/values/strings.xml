@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EarlyBirdApp</string>
     <string name="select">Choose a Priority</string>
+    <string name="new_activity">New Activity</string>
 
     <string-array name="priority_array">
         <item>High</item>
