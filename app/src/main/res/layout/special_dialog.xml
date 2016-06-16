@@ -7,18 +7,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Task Name"
+        android:inputType="text"
         android:id="@+id/editText" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Task Description"
+        android:inputType="text"
         android:id="@+id/editText2" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Days"
+        android:inputType="number"
         android:id="@+id/editText3"
         android:layout_gravity="center_horizontal" />
 

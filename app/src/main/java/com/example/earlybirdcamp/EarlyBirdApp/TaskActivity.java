@@ -12,14 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
-
 public class TaskActivity extends AppCompatActivity{
     private String user;
     private static final String TAG = "TaskActivity";
-//
 
-    Spinner spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +33,12 @@ public class TaskActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_task:
-                //final EditText taskEditText = new EditText(this);
                 final AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new task")
                         .setMessage("What do you want to do next?")
                         //.setView(taskEditText)
                         .setView(R.layout.special_dialog)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-
 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
