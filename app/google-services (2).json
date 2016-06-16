@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "822151311494",
+    "firebase_url": "https://project-1822753269628434915.firebaseio.com",
+    "project_id": "project-1822753269628434915",
+    "storage_bucket": "project-1822753269628434915.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822151311494:android:db628af18b94e8c6",
+        "android_client_info": {
+          "package_name": "com.unagi.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822151311494-j5pdf2g18j10nahekl9d79sglllokudm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2fxD3rS9ISouaEdUCFw19IDugbZyOsBk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
