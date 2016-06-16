@@ -21,8 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Days"
-        android:inputType="number"
+        android:digits="0123456789"
+        android:inputType="numberSigned"
         android:id="@+id/editText3"
+        android:max="365"
         android:layout_gravity="center_horizontal" />
 
     <Spinner

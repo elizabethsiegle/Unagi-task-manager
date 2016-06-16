@@ -33,6 +33,7 @@ public class TaskActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_task:
+
                 final AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new task")
                         .setMessage("What do you want to do next?")
@@ -43,6 +44,8 @@ public class TaskActivity extends AppCompatActivity{
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
                                 Dialog dialog = (Dialog) dialogInterface;
+                                //not sure if should be here
+
                                 Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
                                 String[]  array_name = getResources().getStringArray(R.array.priority_array);
 

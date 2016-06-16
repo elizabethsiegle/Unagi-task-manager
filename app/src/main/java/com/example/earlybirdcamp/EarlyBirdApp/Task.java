@@ -13,5 +13,4 @@ public class Task {
     public String getTitle(){
         return mTitle;
     }
-    //>:C
 }
