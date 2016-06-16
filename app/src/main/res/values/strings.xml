@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EarlyBirdApp</string>
+    <string name="app_name">Unagi Task Manager</string>
     <string name="select">Choose a Priority</string>
 
     <string-array name="priority_array">

@@ -57,7 +57,7 @@ public class TaskActivity extends AppCompatActivity{
                                 adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spin.setAdapter(adapter_state);*/
 
-                                spin.setOnItemSelectedListener(new OnItemSelectedListener() {
+                                /*spin.setOnItemSelectedListener(new OnItemSelectedListener() {
 
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View selectedItemView,
@@ -73,7 +73,7 @@ public class TaskActivity extends AppCompatActivity{
 
                                     }
 
-                                });
+                                });*/
                                 int select = spin.getSelectedItemPosition();
                                 Toast.makeText(TaskActivity.this, "this is my Toast message!!! =) " + select, Toast.LENGTH_LONG).show();
 
