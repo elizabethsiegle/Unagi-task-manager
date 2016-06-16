@@ -22,6 +22,12 @@ public class Task {
        // this.due_date = ;
     }
 
+    public Task(String taskName, String desc){
+        this.taskName = taskName;
+        this.desc = desc;
+        days = 1;
+    }
+
     public String getTaskName() {
         return taskName;
     }

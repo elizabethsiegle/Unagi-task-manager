@@ -152,32 +152,49 @@ public class TaskActivity extends AppCompatActivity{
 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
+                                int select;
+                                int days;
+                                EditText debug;
+                                EditText taskNameObject;
+                                EditText taskDescriptionObject;
+                                EditText daysObject;
+
                                 //-->it sets the dialog
                                 Dialog dialog = (Dialog) dialogInterface;
                                 Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
                                 //-->COMMENTED CODE #1 GOES HERE
-                                int select = spin.getSelectedItemPosition();//-->level of priority
+                                select = spin.getSelectedItemPosition();//-->level of priority
                                 // --> create Task Object:
                                 //taskName, taskDescription, days
-                                EditText taskNameObject = (EditText) dialog.findViewById(R.id.taskName);
-                                EditText taskDescriptionObject = (EditText) dialog.findViewById(R.id.taskDescription);
-                                EditText daysObject = (EditText) dialog.findViewById(R.id.days);
+                                taskNameObject = (EditText) dialog.findViewById(R.id.taskName);
+                                taskDescriptionObject = (EditText) dialog.findViewById(R.id.taskDescription);
+                                daysObject = (EditText) dialog.findViewById(R.id.days);
+
+                                debug = (EditText) dialog.findViewById(R.id.days);
 
                                 String taskName = taskNameObject.getText().toString();
                                 String taskDescription = taskDescriptionObject.getText().toString();
-                                int days = Integer.parseInt(daysObject.getText().toString());
+
+                                String debugS = debug.getText().toString();
+
+                                if(daysObject.getText().toString().compareTo("") == 0) {
+                                    days = 1;
+                                }
+                                else{
+                                    days = Integer.parseInt(daysObject.getText().toString());
+                                }
                                 // 1- Figure out how to get due date (dd/mm/yyyy)
 
                                 //2- Create a Task object
-
+                                Task newTask = new Task(taskName,taskDescription,days);
                                 //3- Add task object to the ArrayList   tasksLists;
-
-
+                                tasksLists.add(newTask);
+                                updateUI();
 
                                 // public Task(String title, String desc, int days, Date due_date) {
                                 //Task new_task = new Task(String title, String desc, int days, Date due_date);
                                 //
-                                Toast.makeText(TaskActivity.this, "this is my Toast message!!! =) " + select, Toast.LENGTH_LONG).show();
+                                Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
                                 //String text = spin.getSelectedItem().toString();
 
@@ -189,6 +206,8 @@ public class TaskActivity extends AppCompatActivity{
                         .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
+                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.darkTextColor));
                 return true;
 
             default:
