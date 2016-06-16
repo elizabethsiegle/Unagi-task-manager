@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -18,15 +19,45 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+                            /*
+                              SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            Calendar c = Calendar.getInstance();
+                                c.setTime(new Date()); // Now use today date.
+                                 c.add(Calendar.DATE, 5); // Adding 5 days
+String output = sdf.format(c.getTime());
+
+
+
+                               */
+
+
+
+
+
 public class TaskActivity extends AppCompatActivity{
+    ArrayList<Task> tasksLists;
+
     private String user;
     private static final String TAG = "TaskActivity";
+
+//    public SimpleDateFormat getDueDate(int days){
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Calendar c =  Calendar.getInstance();
+//
+//        return
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         Intent intent = getIntent();
+        tasksLists = new ArrayList<Task>();
         user = intent.getStringExtra("user");
     }
     @Override
@@ -37,47 +68,44 @@ public class TaskActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //--> If you have multiple icons, it allows you to switch among them
         switch (item.getItemId()) {
-            case R.id.action_add_task:
+            case R.id.action_add_task: // --> if it's the + icon
                 final AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new task")
                         .setMessage("What do you want to do next?")
-                        // this is how The Dialog is gonna look
+                        //--> this is how The Dialog is gonna look (check the special_dialog.xml)
                         .setView(R.layout.special_dialog)
-                         // set the functionality of a button/ what the button is gonna be user for
+                         //--> set the functionality of a button/ what the button is gonna be user for
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
+                                //-->it sets the dialog
                                 Dialog dialog = (Dialog) dialogInterface;
                                 Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
+                                //-->COMMENTED CODE #1 GOES HERE
+                                int select = spin.getSelectedItemPosition();//-->level of priority
+                                // --> create Task Object:
+                                //taskName, taskDescription, days
+                                EditText taskNameObject = (EditText) dialog.findViewById(R.id.taskName);
+                                EditText taskDescriptionObject = (EditText) dialog.findViewById(R.id.taskDescription);
+                                EditText daysObject = (EditText) dialog.findViewById(R.id.days);
 
-                                // we need these values for later use: Low, Medium, High
-                                String[]  array_name = getResources().getStringArray(R.array.priority_array);
+                                String taskName = taskNameObject.getText().toString();
+                                String taskDescription = taskDescriptionObject.getText().toString();
+                                int days = Integer.parseInt(daysObject.getText().toString());
+                                // 1- Figure out how to get due date (dd/mm/yyyy)
 
-                                /*
-                                ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(TaskActivity.this, android.R.layout.simple_spinner_item, array_name);
-                                adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spin.setAdapter(adapter_state);*/
+                                //2- Create a Task object
 
-                                spin.setOnItemSelectedListener(new OnItemSelectedListener() {
+                                //3- Add task object to the ArrayList   tasksLists;
 
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> parent, View selectedItemView,
-                                                               int pos, long id) {
-                                        Toast.makeText(parent.getContext(),
-                                                "On Item Select : \n" + parent.getItemAtPosition(pos).toString(),
-                                                Toast.LENGTH_LONG).show();
-                                    }
 
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> arg0) {
-                                        //  Auto-generated method stub
 
-                                    }
-
-                                });
-                                int select = spin.getSelectedItemPosition();
+                                // public Task(String title, String desc, int days, Date due_date) {
+                                //Task new_task = new Task();
+                                //
                                 Toast.makeText(TaskActivity.this, "this is my Toast message!!! =) " + select, Toast.LENGTH_LONG).show();
 
                                 //String text = spin.getSelectedItem().toString();
@@ -97,3 +125,23 @@ public class TaskActivity extends AppCompatActivity{
         }
     }
 }
+/*   COMMENTED CODE #1
+
+                                spin.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View selectedItemView,
+                                                               int pos, long id) {
+                                        Toast.makeText(parent.getContext(),
+                                                "On Item Select : \n" + parent.getItemAtPosition(pos).toString(),
+                                                Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> arg0) {
+                                        //  Auto-generated method stub
+
+                                    }
+
+                                });
+*/

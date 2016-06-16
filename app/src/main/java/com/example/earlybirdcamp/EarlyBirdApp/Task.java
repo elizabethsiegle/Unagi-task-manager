@@ -1,5 +1,6 @@
 package com.example.earlybirdcamp.EarlyBirdApp;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -7,24 +8,25 @@ import java.util.Date;
  */
 public class Task {
 
-    private String title;
+    private String taskName;
     private String desc;
     private int days;
-    private Date due_date;
+   // private Date due_date;
+    private SimpleDateFormat due_date;
 
-    public Task(String title, String desc, int days, Date due_date) {
-        this.title = title;
+    public Task(String taskName, String desc, int days, SimpleDateFormat due_date) {
+        this.taskName = taskName;
         this.desc = desc;
         this.days = days;
         this.due_date = due_date;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     public String getDesc() {
@@ -43,11 +45,11 @@ public class Task {
         this.days = days;
     }
 
-    public Date getDue_date() {
+    public SimpleDateFormat getDue_date() {
         return due_date;
     }
 
-    public void setDue_date(Date due_date) {
+    public void setDue_date(SimpleDateFormat due_date) {
         this.due_date = due_date;
     }
 }

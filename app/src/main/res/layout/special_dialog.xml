@@ -8,21 +8,21 @@
         android:layout_height="wrap_content"
         android:hint="Task Name"
         android:inputType="text"
-        android:id="@+id/editText" />
+        android:id="@+id/taskName" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Task Description"
         android:inputType="text"
-        android:id="@+id/editText2" />
+        android:id="@+id/taskDescription" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Days"
         android:inputType="number"
-        android:id="@+id/editText3"
+        android:id="@+id/days"
         android:layout_gravity="center_horizontal" />
 
     <Spinner

@@ -4,9 +4,9 @@
     <string name="new_activity">New Activity</string>
 
     <string-array name="priority_array">
-        <item>High</item>
-        <item>Medium</item>
         <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
     </string-array>
 
 
