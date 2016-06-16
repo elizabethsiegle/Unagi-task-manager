@@ -56,11 +56,14 @@ public class TaskActivity extends AppCompatActivity{
     Purpose: to hold the view for one single task. Note: for now it only has the taskName
   */
     private  class TaskHolder extends  RecyclerView.ViewHolder{
-        public TextView taskName;
+        public TextView taskNameView;
+        public TextView daysLeftView;
+        //public Button doneButton;
 
         public  TaskHolder(View itemView){ //--> Constructor for a TaskHolder, notice how it takes
             super(itemView);                // --> a View element, this constructor will be called
-            taskName = (TextView)itemView; //--> in the adapter. Remember that the adapter's job
+            taskNameView = (TextView)itemView.findViewById(R.id.task_name_view); //--> in the adapter. Remember that the adapter's job
+            daysLeftView = (TextView)itemView.findViewById(R.id.days_left);
         }                               // --> is to inflate/draw a taskHolder element
 
         //@Override  --> we might need this override
@@ -84,7 +87,11 @@ public class TaskActivity extends AppCompatActivity{
         public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType){
             LayoutInflater layoutInflater = getLayoutInflater(); //--> create/instantiate an inflater,
                                                                 //--> so you can draw an element
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent,false);
+            View view = layoutInflater.inflate(R.layout.item_task,parent,false);
+            view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            //view.setBackground(getDrawable(R.drawable.light_gradient));
+            view.setClickable(true);
+
             return new TaskHolder(view); // --> Here's where you use the taskHolder constructor,
         }
       /* NOTE: At this point you have inflated/drawn the cell that holds the task, but you haven't populated
@@ -95,7 +102,8 @@ public class TaskActivity extends AppCompatActivity{
         @Override
         public void onBindViewHolder(TaskHolder holder, int position){
             Task task = tasksList.get(position);
-            holder.taskName.setText(task.getTaskName());
+            holder.taskNameView.setText(task.getTaskName());
+            holder.daysLeftView.setText(String.valueOf(task.getDays()));
         }
  //-------------------------------- getItemsCount --------------------------------------------
      /*PURPOSE: to return the number of elemtnts in the list */
