@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/light_gradient"
+    android:padding="10dp"
+    >
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Task Name"
         android:inputType="text"
-        android:id="@+id/taskName" />
+        android:id="@+id/taskName"
+        android:theme="@style/EditTextTheme"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Task Description"
         android:inputType="text"
-        android:id="@+id/taskDescription" />
+        android:id="@+id/taskDescription"
+        android:theme="@style/EditTextTheme"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -23,12 +28,14 @@
         android:hint="Days"
         android:inputType="number"
         android:id="@+id/days"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:theme="@style/EditTextTheme"/>
 
     <Spinner
         android:id="@+id/priority_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:entries="@array/priority_array"
-        android:prompt="@string/select"/>
+        android:prompt="@string/select"
+        android:theme="@style/EditTextTheme"/>
 </LinearLayout>
