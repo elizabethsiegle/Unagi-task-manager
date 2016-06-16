@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EarlyBirdApp</string>
+    <string name="app_name">Unagi Task Manager</string>
     <string name="select">Choose a Priority</string>
     <string name="new_activity">New Activity</string>
 

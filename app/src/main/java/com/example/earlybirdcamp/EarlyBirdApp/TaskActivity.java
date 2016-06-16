@@ -3,36 +3,129 @@ package com.example.earlybirdcamp.EarlyBirdApp;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TaskActivity extends AppCompatActivity {
+import retrofit.http.HEAD;
+
+
+public class TaskActivity extends AppCompatActivity{
+/************************************ VARIABLES *********************************************/
+    private RecyclerView taskRecyclerView;
+    private TaskAdapter adapter;
     ArrayList<Task> tasksLists;
 
-    private String user;
     private static final String TAG = "TaskActivity";
     int days;
     SimpleDateFormat format;
-    SimpleDateFormat deadlineDay;
+    //SimpleDateFormat deadlineDay;
+
+ /************************************** TASK HOLDER *******************************************/
+ /*
+    Functionality: ViewHolder-Recyclerview
+    Purpose: to hold the view for one single task. Note: for now it only has the taskName
+  */
+    private  class TaskHolder extends  RecyclerView.ViewHolder{
+        public TextView taskNameView;
+        public TextView daysLeftView;
+        //public Button doneButton;
+
+        public  TaskHolder(View itemView){ //--> Constructor for a TaskHolder, notice how it takes
+            super(itemView);                // --> a View element, this constructor will be called
+            taskNameView = (TextView)itemView.findViewById(R.id.task_name_view); //--> in the adapter. Remember that the adapter's job
+            daysLeftView = (TextView)itemView.findViewById(R.id.days_left);
+        }                               // --> is to inflate/draw a taskHolder element
+
+        //@Override  --> we might need this override
+        public void onClick(View v) {
+                //-->> ADD CODE HERE: what happens when the user clicks on a task
+        }
+    }
+
+    /************************************** ADAPTER *******************************************/
+    private  class TaskAdapter extends  RecyclerView.Adapter<TaskHolder>{
+
+        private ArrayList<Task> tasksList;  //-->list containing all the user's tasks
 
 
+        public  TaskAdapter(ArrayList<Task> tasks){//-->constructor, notice that it takes
+            tasksList = tasks;                  // --> an ArrayList argument
+        }
+ //------------------------------------ BindHolder --------------------------------------------
+    /* PURPOSE: to create/instantiate a Task Holder (remember a taskholder only holds 1 task)   */
+        @Override
+        public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType){
+            LayoutInflater layoutInflater = getLayoutInflater(); //--> create/instantiate an inflater,
+                                                                //--> so you can draw an element
+            View view = layoutInflater.inflate(R.layout.item_task,parent,false);
+            view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            //view.setBackground(getDrawable(R.drawable.light_gradient));
+            view.setClickable(true);
+
+            return new TaskHolder(view); // --> Here's where you use the taskHolder constructor,
+        }
+      /* NOTE: At this point you have inflated/drawn the cell that holds the task, but you haven't populated
+       the cell with information yet. That's what the onBingViewHolder is for. */
+
+//--------------------------------- BindHolder --------------------------------------------
+    /*PURPOSE: To populate the taskHolder with information  */
+        @Override
+        public void onBindViewHolder(TaskHolder holder, int position){
+            Task task = tasksList.get(position);
+            holder.taskNameView.setText(task.getTaskName());
+            holder.daysLeftView.setText(String.valueOf(task.getDays()));
+        }
+ //-------------------------------- getItemsCount --------------------------------------------
+     /*PURPOSE: to return the number of elemtnts in the list */
+        @Override    // --> returns the item count
+        public int getItemCount(){
+            return tasksList.size();
+        }
+
+    }
+
+
+
+    /***************************UPDATE USER INTERFACE *******************************************/
+
+    /*PURPOSE: to rerender the data everytime there is a change and to initialize the adapter  */
+    private void updateUI(){
+        // fetch data from firebase here to update the list
+        //ArrayList<Task> tasks = tasksLists;
+        adapter = new TaskAdapter(tasksLists);
+        taskRecyclerView.setAdapter(adapter);
+
+
+    }
+    /********************************* ONCREATE *******************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-        Intent intent = getIntent();
-        tasksLists = new ArrayList<Task>();
-        user = intent.getStringExtra("user");
+
+        // -----Code added
+        tasksLists = new ArrayList<Task>();  //--> instantiate our arraylist for tasks
+        taskRecyclerView  = (RecyclerView) findViewById(R.id.recycler_view); //--> instantiate the reccler view
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // --> sets the linear LayourManager
+        updateUI();  //--> initializes the adapter
+
     }
     @Override
     protected void onResume() {
@@ -63,49 +156,73 @@ public class TaskActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
+                                int select;
+                                EditText debug;
+                                EditText taskNameObject;
+                                EditText taskDescriptionObject;
+                                EditText daysObject;
+
                                 //-->it sets the dialog
                                 Dialog dialog = (Dialog) dialogInterface;
 
                                 Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
                                 //-->COMMENTED CODE #1 GOES HERE
-                                int select = spin.getSelectedItemPosition();//-->level of priority
+                                select = spin.getSelectedItemPosition();//-->level of priority
                                 // --> create Task Object:
                                 //taskName, taskDescription, days
-                                EditText taskNameObject = (EditText) dialog.findViewById(R.id.taskName);
-                                EditText taskDescriptionObject = (EditText) dialog.findViewById(R.id.taskDescription);
-                                EditText daysObject = (EditText) dialog.findViewById(R.id.days);
+                                taskNameObject = (EditText) dialog.findViewById(R.id.taskName);
+                                taskDescriptionObject = (EditText) dialog.findViewById(R.id.taskDescription);
+                                daysObject = (EditText) dialog.findViewById(R.id.days);
+
+                                debug = (EditText) dialog.findViewById(R.id.days);
 
                                 String taskName = taskNameObject.getText().toString();
                                 String taskDescription = taskDescriptionObject.getText().toString();
                                 days = Integer.parseInt(daysObject.getText().toString());
+
+
+
+                                String debugS = debug.getText().toString();
+
+                                if(daysObject.getText().toString().compareTo("") == 0) {
+                                    days = 1;
+                                }
+                                else{
+                                    days = Integer.parseInt(daysObject.getText().toString());
+                                }
 
                                 // 1- Figure out how to get due date (dd/mm/yyyy)
                                 //call when new task is added get current date
                                 Calendar curr = Calendar.getInstance();
                                 Calendar cal = Calendar.getInstance(); //constant
                                 cal.add(Calendar.DATE, days); //due date
-                                format = new SimpleDateFormat("MMMM d, yyyy");
-                                deadlineDay = format.format(curr.getTime());
+                                format = new SimpleDateFormat("MM d, yyyy");
+                                String deadlineDay = format.format(curr.getTime());
                                 if(cal.getTime() == curr.getTime()) {
                                     //task expired
                                     Toast.makeText(TaskActivity.this, "task expired, shame tweet " + select, Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    Toast.makeText(TaskActivity.this, "siccess tweet " + deadlineDay, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(TaskActivity.this, "success tweet " + deadlineDay, Toast.LENGTH_LONG).show();
                                 }
 
                                 //2- Create a Task object
+
                                 Task newTask = new Task(taskName,taskDescription, days, deadlineDay);
 
-
                                 //3- Add task object to the ArrayList   tasksLists;
-
-
+                                tasksLists.add(newTask);
+                                updateUI();
 
                                 // public Task(String title, String desc, int days, Date due_date) {
-                                //Task new_task = new Task();
+                                //Task new_task = new Task(String title, String desc, int days, Date due_date);
                                 //
-                                Toast.makeText(TaskActivity.this, "this is my Toast message!!! =) " + select, Toast.LENGTH_LONG).show();
+
+                                String tweetUrl = "https://twitter.com/intent/tweet?text=Just Completed " + taskName + "!! %23Unagi";
+                                Uri uri = Uri.parse(tweetUrl);
+                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+
+                                Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
                                 //String text = spin.getSelectedItem().toString();
 
@@ -117,6 +234,8 @@ public class TaskActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
+                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.darkTextColor));
                 return true;
 
             default:

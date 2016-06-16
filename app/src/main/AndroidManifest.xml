@@ -17,14 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.TaskListActivity" />
         <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.TaskActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="8526738dddb25640eb2d7e77f365f529d12e92cd" />
 
-        <activity android:name="com.example.earlybirdcamp.EarlyBirdApp.TwitterTimelineActivity"></activity>
     </application>
 
 </manifest>
