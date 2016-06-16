@@ -1,40 +1,55 @@
 package com.example.earlybirdcamp.EarlyBirdApp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by earlybirdcamp on 6/14/16.
  */
 public class Task {
 
-    String title;
-    String desc;
-    int days;
+    private String taskName;
+    private String desc;
+    private int days;
+   // private Date due_date;
+    private SimpleDateFormat due_date;
 
-    public Task(){
-
+    public Task(String taskName, String desc, int days, SimpleDateFormat due_date) {
+        this.taskName = taskName;
+        this.desc = desc;
+        this.days = days;
+        this.due_date = due_date;
     }
 
-    public String getTitle(){
-        return title;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTitle(String title){
-        this.title = title;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public String getDesc(){
+    public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc){
+    public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    public int getDays(){
+    public int getDays() {
         return days;
     }
 
-    public void setDays(int days){
+    public void setDays(int days) {
         this.days = days;
     }
 
+    public SimpleDateFormat getDue_date() {
+        return due_date;
+    }
+
+    public void setDue_date(SimpleDateFormat due_date) {
+        this.due_date = due_date;
+    }
 }
