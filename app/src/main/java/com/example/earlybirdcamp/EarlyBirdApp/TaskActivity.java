@@ -24,16 +24,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-                            /*
-                              SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                            Calendar c = Calendar.getInstance();
-                                c.setTime(new Date()); // Now use today date.
-                                 c.add(Calendar.DATE, 5); // Adding 5 days
-String output = sdf.format(c.getTime());
-
-
-
-                               */
+/*
+       SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+       Calendar c = Calendar.getInstance();
+       c.setTime(new Date()); // Now use today date.
+       c.add(Calendar.DATE, 5); // Adding 5 days
+      String output = sdf.format(c.getTime());
+get */
 
 
 
