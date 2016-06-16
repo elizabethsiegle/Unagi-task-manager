@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 public class TaskActivity extends FragmentActivity{
     private String user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
