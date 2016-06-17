@@ -34,6 +34,7 @@ import java.util.List;
 import retrofit.http.HEAD;
 
 
+
 public class TaskActivity extends AppCompatActivity{
 /************************************ VARIABLES *********************************************/
     private RecyclerView taskRecyclerView;
@@ -98,6 +99,7 @@ public class TaskActivity extends AppCompatActivity{
                                                                 //--> so you can draw an element
             View view = layoutInflater.inflate(R.layout.item_task,parent,false);
             view.setBackgroundColor(getResources().getColor(R.color.lightGradientBottom));
+            view.setElevation((float)1.0);
             //view.setBackground(getDrawable(R.drawable.light_gradient));
             view.setClickable(true);
 
@@ -309,7 +311,8 @@ public class TaskActivity extends AppCompatActivity{
                 dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
                 dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.darkTextColor));
                 return true;
-
+            case (R.id.action_sort):
+                //put sort in here
             default:
                 return super.onOptionsItemSelected(item);
         }

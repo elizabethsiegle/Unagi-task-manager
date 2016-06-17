@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_add_task"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_add_task"
         android:title="Add Task"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_sort_icon"
+        android:title="Sort List"
+        app:showAsAction="always"
+        />
 </menu>
