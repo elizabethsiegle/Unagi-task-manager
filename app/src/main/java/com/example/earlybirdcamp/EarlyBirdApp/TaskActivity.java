@@ -210,7 +210,7 @@ public class TaskActivity extends AppCompatActivity{
         public int compare(Task task1, Task task2) {
             int priority1 = task1.getPriority();
             int priority2 = task2.getPriority();
-           return (priority1 - priority2);
+           return (priority2 - priority1);
         }
     }
 
@@ -381,9 +381,13 @@ public class TaskActivity extends AppCompatActivity{
                 return true;
             case (R.id.date_sort):
                 Collections.sort(tasksList, new DateComparator());
+                updateUI();
+                return true;
                 //put sort in here
             case (R.id.priority_sort):
                 Collections.sort(tasksList, new PriorityComparator());
+                updateUI();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
