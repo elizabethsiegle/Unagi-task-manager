@@ -31,16 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/*
-       SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-       Calendar c = Calendar.getInstance();
-       c.setTime(new Date()); // Now use today date.
-       c.add(Calendar.DATE, 5); // Adding 5 days
-      String output = sdf.format(c.getTime());
-get */
-
-
-
+import retrofit.http.HEAD;
 
 
 public class TaskActivity extends AppCompatActivity{
@@ -50,6 +41,9 @@ public class TaskActivity extends AppCompatActivity{
     ArrayList<Task> tasksList;
 
     private static final String TAG = "TaskActivity";
+    int days;
+    SimpleDateFormat format;
+    //SimpleDateFormat deadlineDay;
 
  /************************************** TASK HOLDER *******************************************/
  /*
@@ -57,7 +51,6 @@ public class TaskActivity extends AppCompatActivity{
     Purpose: to hold the view for one single task. Note: for now it only has the taskName
   */
     private  class TaskHolder extends  RecyclerView.ViewHolder{
-
         public TextView taskNameView;
         public TextView daysLeftView;
         //public Button doneButton;
@@ -70,7 +63,7 @@ public class TaskActivity extends AppCompatActivity{
 
         //@Override  --> we might need this override
         public void onClick(View v) {
-
+                //-->> ADD CODE HERE: what happens when the user clicks on a task
         }
     }
 
@@ -164,6 +157,13 @@ public class TaskActivity extends AppCompatActivity{
 
     }
     @Override
+    protected void onResume() {
+        super.onResume();
+        //fetch date from database
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -216,9 +216,25 @@ public class TaskActivity extends AppCompatActivity{
                                     days = Integer.parseInt(daysObject.getText().toString());
                                 }
                                 // 1- Figure out how to get due date (dd/mm/yyyy)
+                                //call when new task is added get current date
+                                Calendar curr = Calendar.getInstance();
+                                Calendar cal = Calendar.getInstance(); //constant
+                                cal.add(Calendar.DATE, days); //due date
+                                format = new SimpleDateFormat("MM d, yyyy");
+                                String deadlineDay = format.format(curr.getTime());
+                                if(cal.getTime() == curr.getTime()) {
+                                    //task expired
+                                    Toast.makeText(TaskActivity.this, "task expired, shame tweet " + select, Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    Toast.makeText(TaskActivity.this, "success tweet " + deadlineDay, Toast.LENGTH_LONG).show();
+                                }
 
                                 //2- Create a Task object
                                 Task newTask = new Task(taskName,taskDescription,days, priority);
+
+                                Task newTask = new Task(taskName,taskDescription, days, deadlineDay);
+
                                 //3- Add task object to the ArrayList   tasksLists;
                                 tasksList.add(newTask);
                                 updateUI();
@@ -229,7 +245,7 @@ public class TaskActivity extends AppCompatActivity{
 
                                 String tweetUrl = "https://twitter.com/intent/tweet?text=Just Completed " + taskName + "!! %23Unagi";
                                 Uri uri = Uri.parse(tweetUrl);
-                               // startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
                                 Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
@@ -272,4 +288,3 @@ public class TaskActivity extends AppCompatActivity{
 
                                 });
 */
-

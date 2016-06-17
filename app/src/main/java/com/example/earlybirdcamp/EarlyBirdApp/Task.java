@@ -13,15 +13,15 @@ public class Task {
     private int days;
     private int priority;
 
-   // private Date due_date;
-   // private SimpleDateFormat due_date;
+    private String dueDate;
 
-    public Task(String taskName, String desc, int days, int priority) {
+    public Task(String taskName, String desc, int days, int priority, String dueDate) {
         this.taskName = taskName;
         this.desc = desc;
         this.days = days;
         this.priority = priority;
        // this.due_date = ;
+        this.dueDate = dueDate;
     }
 
     public Task(String taskName, String desc){
@@ -60,6 +60,13 @@ public class Task {
 
     public int getPriority(){
         return priority;
+    }
+    public String getDue_date() {
+        return dueDate;
+    }
+
+    public void setDue_date(String dueDate) {
+        this.dueDate = dueDate;
     }
 //    public SimpleDateFormat getDue_date() {
 ////        return due_date;
