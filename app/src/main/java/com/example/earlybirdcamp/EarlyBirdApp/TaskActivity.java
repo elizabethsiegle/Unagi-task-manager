@@ -197,26 +197,15 @@ public class TaskActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+
+
         //fetch date from database
         // check for expiration and show push notification.
 
     }
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-//    Date date = dateFormat.parse("1.1.2001");
-    /*Date date = null;
-    Date formatteddate = null;
-    DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-    try{
-        date = df.parse(dateString);
-        formatteddate = df.format(date);
-    }
-    catch ( Exception ex ){
-        System.out.println(ex);
-    }*/
 
 
-
-    public class DateComparator implements Comparator<Task> {
+    public class PriorityComparator implements Comparator<Task> {
         @Override
         public int compare(Task task1, Task task2) {
             int priority1 = task1.getPriority();
@@ -225,7 +214,7 @@ public class TaskActivity extends AppCompatActivity{
         }
     }
 
-    public class PriorityComparator implements Comparator<Task> {
+    public class DateComparator implements Comparator<Task> {
         @Override
         public int compare(Task task1, Task task2) {
             String date1 = task1.getDue_date();
