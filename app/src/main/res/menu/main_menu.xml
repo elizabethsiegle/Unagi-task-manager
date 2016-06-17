@@ -8,13 +8,13 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/date_sort"
-        android:icon="@drawable/ic_sort_icon"
+        android:icon="@drawable/date_sort"
         android:title="Date"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/priority_sort"
-        android:icon="@drawable/ic_sort_icon"
+        android:icon="@drawable/priority_sort"
         android:title="Priority"
         app:showAsAction="always"
         />
