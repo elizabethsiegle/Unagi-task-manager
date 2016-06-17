@@ -166,16 +166,29 @@ public class TaskActivity extends AppCompatActivity{
 
         taskRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override public void onItemClick(View view, final int position) {
                         // TODO Handle item click
+
+
                         Toast.makeText(TaskActivity.this, "ya clicked the thingy", Toast.LENGTH_LONG).show();
                         final AlertDialog dialog = new AlertDialog.Builder(TaskActivity.this)
-                                .setTitle("bleep bloop I'm a dialog")
-                                .setMessage("What do you want to do next?")
+                                .setTitle(tasksList.get(position).getTaskName())
+                                .setMessage(tasksList.get(position).getDesc() + "\nDue: " + tasksList.get(position).getDue_date())
                                 //--> this is how The Dialog is gonna look (check the special_dialog.xml)
                                 //--> set the functionality of a button/ what the button is gonna be user for
-                                .setPositiveButton("Close", null)
-                                .setNegativeButton("Cancel", null)
+                                .setPositiveButton("Done!", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int which) {
+                                        String tweetUrl = "https://twitter.com/intent/tweet?text=I finished: " + tasksList.get(position).getTaskName()+ "!! %23Unagi";
+                                        Uri uri = Uri.parse(tweetUrl);
+                                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                        tasksList.remove(position);
+
+                                        updateUI();
+                                    }
+                                })
+                                .setNegativeButton("Close", null)
                                 .create();
                         dialog.show();
                         dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
@@ -253,9 +266,9 @@ public class TaskActivity extends AppCompatActivity{
                                 //call when new task is added get current date
                                 Calendar curr = Calendar.getInstance();
                                 Calendar cal = Calendar.getInstance(); //constant
-                                cal.add(Calendar.DATE, days); //due date
+                                cal.add(Calendar.DATE, days +1); //due date
                                 format = new SimpleDateFormat("MM d, yyyy");
-                                String deadlineDay = format.format(curr.getTime());
+                                String deadlineDay = format.format(cal.getTime());
                                 if(cal.getTime() == curr.getTime()) {
                                     //task expired
                                     //Toast.makeText(TaskActivity.this, "task expired, shame tweet " + priority, Toast.LENGTH_LONG).show();
@@ -277,9 +290,9 @@ public class TaskActivity extends AppCompatActivity{
                                 //Task new_task = new Task(String title, String desc, int days, Date due_date);
                                 //
 
-                                String tweetUrl = "https://twitter.com/intent/tweet?text=Just Completed " + taskName + "!! %23Unagi";
+                                String tweetUrl = "https://twitter.com/intent/tweet?text=I%27m committing to: " + taskName + "!! %23Unagi";
                                 Uri uri = Uri.parse(tweetUrl);
-                                //startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
                                 Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
