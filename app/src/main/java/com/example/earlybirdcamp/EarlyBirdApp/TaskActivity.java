@@ -22,7 +22,10 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.text.ParseException;
 
 
 public class TaskActivity extends AppCompatActivity{
@@ -195,8 +198,55 @@ public class TaskActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         //fetch date from database
+        // check for expiration and show push notification.
 
     }
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//    Date date = dateFormat.parse("1.1.2001");
+    /*Date date = null;
+    Date formatteddate = null;
+    DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+    try{
+        date = df.parse(dateString);
+        formatteddate = df.format(date);
+    }
+    catch ( Exception ex ){
+        System.out.println(ex);
+    }*/
+
+
+
+    public class DateComparator implements Comparator<Task> {
+        @Override
+        public int compare(Task task1, Task task2) {
+            int priority1 = task1.getPriority();
+            int priority2 = task2.getPriority();
+           return (priority1 - priority2);
+        }
+    }
+
+    public class PriorityComparator implements Comparator<Task> {
+        @Override
+        public int compare(Task task1, Task task2) {
+            String date1 = task1.getDue_date();
+            String date2 = task2.getDue_date();
+            //Date d = new SimpleDateFormat("MMM-dd").parse(date);
+            Date first_date = null;
+            Date second_date = null;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy");
+            try {
+                first_date = dateFormat.parse(date1);
+                second_date = dateFormat.parse(date2);
+            }
+            catch(Exception ex){
+
+            }
+            return first_date.compareTo(second_date);
+        }
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -255,7 +305,7 @@ public class TaskActivity extends AppCompatActivity{
                                 Calendar curr = Calendar.getInstance();
                                 Calendar cal = Calendar.getInstance(); //constant
                                 cal.add(Calendar.DATE, days+1); //due date = cal due date
-                                format = new SimpleDateFormat("MM d, yyyy");
+                                format = new SimpleDateFormat("MMM-dd-yyyy");
                                 String deadlineDay = format.format(cal.getTime());
                                 String tweetUrlFirst = "https://twitter.com/intent/tweet?text=I%27m committing to this task: " + taskName + "!! %23Unagi";
                                 Uri uriFirst = Uri.parse(tweetUrlFirst);
@@ -264,7 +314,7 @@ public class TaskActivity extends AppCompatActivity{
                                 //2- Create a Task object
                                 Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
                                 cal.add(Calendar.DATE, days +1); //due date
-                                format = new SimpleDateFormat("MM d, yyyy");
+                                format = new SimpleDateFormat("MMM-dd-yyyy");
                                 //String deadlineDay = format.format(cal.getTime());
                                 if(cal.getTime() == curr.getTime()) {
                                     //task expired
@@ -340,8 +390,11 @@ public class TaskActivity extends AppCompatActivity{
                 dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
                 dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.darkTextColor));
                 return true;
-            case (R.id.action_sort):
+            case (R.id.date_sort):
+                Collections.sort(tasksList, new DateComparator());
                 //put sort in here
+            case (R.id.priority_sort):
+                Collections.sort(tasksList, new PriorityComparator());
             default:
                 return super.onOptionsItemSelected(item);
         }
