@@ -11,27 +11,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 import android.widget.TextView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.graphics.Rect;
-
-import android.util.Log;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import retrofit.http.HEAD;
 
 
 public class TaskActivity extends AppCompatActivity{
@@ -44,6 +34,7 @@ public class TaskActivity extends AppCompatActivity{
     int days;
     SimpleDateFormat format;
     //SimpleDateFormat deadlineDay;
+    boolean completedTask;
 
  /************************************** TASK HOLDER *******************************************/
  /*
@@ -125,9 +116,6 @@ public class TaskActivity extends AppCompatActivity{
         }
 
     }
-
-
-
     /***************************UPDATE USER INTERFACE *******************************************/
 
     /*PURPOSE: to rerender the data everytime there is a change and to initialize the adapter  */
@@ -136,8 +124,6 @@ public class TaskActivity extends AppCompatActivity{
         //ArrayList<Task> tasks = tasksLists;
         adapter = new TaskAdapter(tasksList);
         taskRecyclerView.setAdapter(adapter);
-
-
     }
     /********************************* ONCREATE *******************************************/
     @Override
@@ -219,33 +205,58 @@ public class TaskActivity extends AppCompatActivity{
                                 //call when new task is added get current date
                                 Calendar curr = Calendar.getInstance();
                                 Calendar cal = Calendar.getInstance(); //constant
-                                cal.add(Calendar.DATE, days); //due date
+                                cal.add(Calendar.DATE, days+1); //due date = cal due date
                                 format = new SimpleDateFormat("MM d, yyyy");
-                                String deadlineDay = format.format(curr.getTime());
-                                if(cal.getTime() == curr.getTime()) {
-                                    //task expired
-                                    Toast.makeText(TaskActivity.this, "task expired, shame tweet " + select, Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    Toast.makeText(TaskActivity.this, "success tweet " + deadlineDay, Toast.LENGTH_LONG).show();
-                                }
+                                String deadlineDay = format.format(cal.getTime());
+                                String tweetUrlFirst = "https://twitter.com/intent/tweet?text=I%27m committing to this task: " + taskName + "!! %23Unagi";
+                                Uri uriFirst = Uri.parse(tweetUrlFirst);
+                                startActivity(new Intent(Intent.ACTION_VIEW, uriFirst));
 
                                 //2- Create a Task object
-                                Task newTask = new Task(taskName,taskDescription,days, priority);
-
-                                Task newTask = new Task(taskName,taskDescription, days, deadlineDay);
+                                Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
 
                                 //3- Add task object to the ArrayList   tasksLists;
                                 tasksList.add(newTask);
                                 updateUI();
 
+                                long calInMilliseconds = cal.getTimeInMillis();
+                                long currInMilliseconds = curr.getTimeInMillis();
+                                //4 - Is task in arrayList
+                                if(cal.getTime() == curr.getTime()) { //due date == current date
+                                    //task expired
+                                    completedTask = false;
+                                    String tweetUrlFail = "https://twitter.com/intent/tweet?text=I did not complete this task: " + taskName + "!! %23Unagi";
+                                    Uri uriFail = Uri.parse(tweetUrlFail);
+                                    startActivity(new Intent(Intent.ACTION_VIEW, uriFail));
+                                    //Toast.makeText(TaskActivity.this, "task expired, shame tweet " + deadlineDay, Toast.LENGTH_LONG).show();
+                                }
+                                else if(calInMilliseconds < currInMilliseconds) { //still time
+
+                                    Calendar oneDayLeft = cal.getInstance();
+                                    oneDayLeft.add(Calendar.DATE, -2);
+                                    //still time
+                                    if(curr.getTime() == oneDayLeft.getTime()) {
+                                        //completedTask = true;
+                                        String tweetUrlRemind = "https://twitter.com/intent/tweet?text=The deadline is coming up for this task: " + taskName + "!! %23Unagi";
+                                        Uri uriRemind = Uri.parse(tweetUrlRemind);
+                                        startActivity(new Intent(Intent.ACTION_VIEW, uriRemind));
+                                        //Toast.makeText(TaskActivity.this, "success tweet " + deadlineDay, Toast.LENGTH_LONG).show();
+                                    }
+                                    else {
+                                        String tweetUrlSuccess = "https://twitter.com/intent/tweet?text=I succeeded at this task: " + taskName + "!! %23Unagi";
+                                        Uri uriSuccess = Uri.parse(tweetUrlSuccess);
+                                        startActivity(new Intent(Intent.ACTION_VIEW, uriSuccess));
+                                    }
+                                }
+
+
                                 // public Task(String title, String desc, int days, Date due_date) {
                                 //Task new_task = new Task(String title, String desc, int days, Date due_date);
                                 //
 
-                                String tweetUrl = "https://twitter.com/intent/tweet?text=Just Completed " + taskName + "!! %23Unagi";
-                                Uri uri = Uri.parse(tweetUrl);
-                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+//                                String tweetUrl = "https://twitter.com/intent/tweet?text=I%27m committing to this task: " + taskName + "!! %23Unagi";
+//                                Uri uri = Uri.parse(tweetUrl);
+//                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
                                 Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
