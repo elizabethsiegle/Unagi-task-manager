@@ -41,7 +41,7 @@ public class TaskActivity extends AppCompatActivity{
     Functionality: ViewHolder-Recyclerview
     Purpose: to hold the view for one single task. Note: for now it only has the taskName
   */
-    private  class TaskHolder extends  RecyclerView.ViewHolder{
+    private  class TaskHolder extends  RecyclerView.ViewHolder {
         public TextView taskNameView;
         public TextView daysLeftView;
         //public Button doneButton;
@@ -52,9 +52,23 @@ public class TaskActivity extends AppCompatActivity{
             daysLeftView = (TextView)itemView.findViewById(R.id.days_left);
         }                               // --> is to inflate/draw a taskHolder element
 
-        //@Override  --> we might need this override
+        //@Override
         public void onClick(View v) {
                 //-->> ADD CODE HERE: what happens when the user clicks on a task
+            Toast.makeText(TaskActivity.this, "ya clicked the thingy", Toast.LENGTH_LONG).show();
+
+
+            final AlertDialog dialog = new AlertDialog.Builder(getBaseContext())
+                    .setTitle("bleep bloop I'm a dialog")
+                    .setMessage("What do you want to do next?")
+                    //--> this is how The Dialog is gonna look (check the special_dialog.xml)
+                    //--> set the functionality of a button/ what the button is gonna be user for
+                    .setPositiveButton("Close", null)
+                    .setNegativeButton("Cancel", null)
+                    .create();
+            dialog.show();
+            dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
+            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.darkTextColor));
         }
     }
 
@@ -136,6 +150,39 @@ public class TaskActivity extends AppCompatActivity{
         taskRecyclerView  = (RecyclerView) findViewById(R.id.recycler_view); //--> instantiate the reccler view
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // --> sets the linear LayourManager
 
+        taskRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, final int position) {
+                        // TODO Handle item click
+
+
+                        Toast.makeText(TaskActivity.this, "ya clicked the thingy", Toast.LENGTH_LONG).show();
+                        final AlertDialog dialog = new AlertDialog.Builder(TaskActivity.this)
+                                .setTitle(tasksList.get(position).getTaskName())
+                                .setMessage(tasksList.get(position).getDesc() + "\nDue: " + tasksList.get(position).getDue_date())
+                                //--> this is how The Dialog is gonna look (check the special_dialog.xml)
+                                //--> set the functionality of a button/ what the button is gonna be user for
+                                .setPositiveButton("Done!", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int which) {
+                                        String tweetUrl = "https://twitter.com/intent/tweet?text=I finished: " + tasksList.get(position).getTaskName()+ "!! %23Unagi";
+                                        Uri uri = Uri.parse(tweetUrl);
+                                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                        tasksList.remove(position);
+
+                                        updateUI();
+                                    }
+                                })
+                                .setNegativeButton("Close", null)
+                                .create();
+                        dialog.show();
+                        dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.negativeTextColor));
+                        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.darkTextColor));
+
+                    }
+                })
+        );
 
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
         taskRecyclerView.addItemDecoration(decoration);
@@ -214,6 +261,19 @@ public class TaskActivity extends AppCompatActivity{
 
                                 //2- Create a Task object
                                 Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
+                                cal.add(Calendar.DATE, days +1); //due date
+                                format = new SimpleDateFormat("MM d, yyyy");
+                                String deadlineDay = format.format(cal.getTime());
+                                if(cal.getTime() == curr.getTime()) {
+                                    //task expired
+                                    //Toast.makeText(TaskActivity.this, "task expired, shame tweet " + priority, Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    //Toast.makeText(TaskActivity.this, "success tweet " + deadlineDay, Toast.LENGTH_LONG).show();
+                                }
+
+                                //2- Create a Task object
+                                Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
 
                                 //3- Add task object to the ArrayList   tasksLists;
                                 tasksList.add(newTask);
@@ -257,6 +317,11 @@ public class TaskActivity extends AppCompatActivity{
 //                                String tweetUrl = "https://twitter.com/intent/tweet?text=I%27m committing to this task: " + taskName + "!! %23Unagi";
 //                                Uri uri = Uri.parse(tweetUrl);
 //                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+
+                                String tweetUrl = "https://twitter.com/intent/tweet?text=I%27m committing to: " + taskName + "!! %23Unagi";
+                                Uri uri = Uri.parse(tweetUrl);
+                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+
 
                                 Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
