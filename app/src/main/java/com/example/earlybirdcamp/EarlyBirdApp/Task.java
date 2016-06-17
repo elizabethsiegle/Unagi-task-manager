@@ -11,14 +11,16 @@ public class Task {
     private String taskName;
     private String desc;
     private int days;
+    private int priority;
 
    // private Date due_date;
    // private SimpleDateFormat due_date;
 
-    public Task(String taskName, String desc, int days) {
+    public Task(String taskName, String desc, int days, int priority) {
         this.taskName = taskName;
         this.desc = desc;
         this.days = days;
+        this.priority = priority;
        // this.due_date = ;
     }
 
@@ -52,6 +54,13 @@ public class Task {
         this.days = days;
     }
 
+    public void setPriority(int priority){
+        this.priority = priority;
+    }
+
+    public int getPriority(){
+        return priority;
+    }
 //    public SimpleDateFormat getDue_date() {
 ////        return due_date;
 ////    }

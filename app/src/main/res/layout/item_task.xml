@@ -3,28 +3,33 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="5dp"
     >
 
     <TextView
         android:id="@+id/task_name_view"
-        android:layout_width="wrap_content"
+        android:padding="16dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:textSize="18sp"
         />
 
     <TextView
-        android:textColor="@color/negativeTextColor"
+        android:textColor="@color/highPriorityColor"
         android:id="@+id/days_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
         />
-
+   <!--
     <Button
         android:id="@+id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10sp"
 
-        />
+        />-->
+
 </LinearLayout>

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.graphics.Rect;
 
 import android.util.Log;
 
@@ -46,7 +47,7 @@ public class TaskActivity extends AppCompatActivity{
 /************************************ VARIABLES *********************************************/
     private RecyclerView taskRecyclerView;
     private TaskAdapter adapter;
-    ArrayList<Task> tasksLists;
+    ArrayList<Task> tasksList;
 
     private static final String TAG = "TaskActivity";
 
@@ -56,6 +57,7 @@ public class TaskActivity extends AppCompatActivity{
     Purpose: to hold the view for one single task. Note: for now it only has the taskName
   */
     private  class TaskHolder extends  RecyclerView.ViewHolder{
+
         public TextView taskNameView;
         public TextView daysLeftView;
         //public Button doneButton;
@@ -68,7 +70,7 @@ public class TaskActivity extends AppCompatActivity{
 
         //@Override  --> we might need this override
         public void onClick(View v) {
-                //-->> ADD CODE HERE: what happens when the user clicks on a task
+
         }
     }
 
@@ -88,7 +90,7 @@ public class TaskActivity extends AppCompatActivity{
             LayoutInflater layoutInflater = getLayoutInflater(); //--> create/instantiate an inflater,
                                                                 //--> so you can draw an element
             View view = layoutInflater.inflate(R.layout.item_task,parent,false);
-            view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            view.setBackgroundColor(getResources().getColor(R.color.lightGradientBottom));
             //view.setBackground(getDrawable(R.drawable.light_gradient));
             view.setClickable(true);
 
@@ -103,7 +105,24 @@ public class TaskActivity extends AppCompatActivity{
         public void onBindViewHolder(TaskHolder holder, int position){
             Task task = tasksList.get(position);
             holder.taskNameView.setText(task.getTaskName());
-            holder.daysLeftView.setText(String.valueOf(task.getDays()));
+            holder.daysLeftView.setText(String.valueOf(task.getDays()) + " days left");
+
+            if(task.getDays() < 3){
+                holder.daysLeftView.setTextColor(getResources().getColor(R.color.negativeTextColor));
+            }
+
+
+
+            switch(task.getPriority()){
+                case 0: holder.taskNameView.setTextColor(getResources().getColor(R.color.lowPriorityColor));
+                    break;
+                case 1: holder.taskNameView.setTextColor(getResources().getColor(R.color.mediumPriorityColor));
+                    break;
+                case 2: holder.taskNameView.setTextColor(getResources().getColor(R.color.highPriorityColor));
+                    break;
+                default: holder.taskNameView.setTextColor(getResources().getColor(R.color.darkTextColor));
+            }
+
         }
  //-------------------------------- getItemsCount --------------------------------------------
      /*PURPOSE: to return the number of elemtnts in the list */
@@ -122,7 +141,7 @@ public class TaskActivity extends AppCompatActivity{
     private void updateUI(){
         // fetch data from firebase here to update the list
         //ArrayList<Task> tasks = tasksLists;
-        adapter = new TaskAdapter(tasksLists);
+        adapter = new TaskAdapter(tasksList);
         taskRecyclerView.setAdapter(adapter);
 
 
@@ -134,9 +153,13 @@ public class TaskActivity extends AppCompatActivity{
         setContentView(R.layout.activity_task);
 
         // -----Code added
-        tasksLists = new ArrayList<Task>();  //--> instantiate our arraylist for tasks
+        tasksList = new ArrayList<Task>();  //--> instantiate our arraylist for tasks
         taskRecyclerView  = (RecyclerView) findViewById(R.id.recycler_view); //--> instantiate the reccler view
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // --> sets the linear LayourManager
+
+
+        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+        taskRecyclerView.addItemDecoration(decoration);
         updateUI();  //--> initializes the adapter
 
     }
@@ -161,7 +184,7 @@ public class TaskActivity extends AppCompatActivity{
 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
-                                int select;
+                                int priority;
                                 int days;
                                 EditText debug;
                                 EditText taskNameObject;
@@ -172,7 +195,7 @@ public class TaskActivity extends AppCompatActivity{
                                 Dialog dialog = (Dialog) dialogInterface;
                                 Spinner spin = (Spinner) dialog.findViewById(R.id.priority_spinner);
                                 //-->COMMENTED CODE #1 GOES HERE
-                                select = spin.getSelectedItemPosition();//-->level of priority
+                                priority = spin.getSelectedItemPosition();//-->level of priority
                                 // --> create Task Object:
                                 //taskName, taskDescription, days
                                 taskNameObject = (EditText) dialog.findViewById(R.id.taskName);
@@ -195,9 +218,9 @@ public class TaskActivity extends AppCompatActivity{
                                 // 1- Figure out how to get due date (dd/mm/yyyy)
 
                                 //2- Create a Task object
-                                Task newTask = new Task(taskName,taskDescription,days);
+                                Task newTask = new Task(taskName,taskDescription,days, priority);
                                 //3- Add task object to the ArrayList   tasksLists;
-                                tasksLists.add(newTask);
+                                tasksList.add(newTask);
                                 updateUI();
 
                                 // public Task(String title, String desc, int days, Date due_date) {
@@ -206,7 +229,7 @@ public class TaskActivity extends AppCompatActivity{
 
                                 String tweetUrl = "https://twitter.com/intent/tweet?text=Just Completed " + taskName + "!! %23Unagi";
                                 Uri uri = Uri.parse(tweetUrl);
-                                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                               // startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
                                 Toast.makeText(TaskActivity.this, "Task "+ taskName +": " + taskDescription + "due in " + days + "added", Toast.LENGTH_LONG).show();
 
@@ -249,3 +272,4 @@ public class TaskActivity extends AppCompatActivity{
 
                                 });
 */
+

@@ -16,5 +16,24 @@
     <color name="negativeTextColor">#C65849</color>
     <color name="darkGradientBottom">#DAF2C1</color>
     <color name="lightGradientBottom">#F2FFE5</color>
+
+    <!-- Priority Colors -->
+    <!-- Green priority -->
+    <!--
+    <color name="highPriorityColor">#4D6633</color>
+    <color name="mediumPriorityColor">#607f3f</color>
+    <color name="lowPriorityColor">#81a55b</color>
+    -->
+    <!--Blue Priority -->
+    <!--
+    <color name="highPriorityColor">#0F4499</color>
+    <color name="mediumPriorityColor">#3565B2</color>
+    <color name="lowPriorityColor">#5B90E5</color>
+    -->
+
+    <!--GreyPriority -->
+    <color name="highPriorityColor">#333333</color>
+    <color name="mediumPriorityColor">#595959</color>
+    <color name="lowPriorityColor">#7F7F7F</color>
 </resources>
 
