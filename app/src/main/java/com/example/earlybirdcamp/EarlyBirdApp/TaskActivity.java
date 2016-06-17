@@ -1,12 +1,17 @@
 package com.example.earlybirdcamp.EarlyBirdApp;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -155,6 +160,8 @@ public class TaskActivity extends AppCompatActivity{
         taskRecyclerView  = (RecyclerView) findViewById(R.id.recycler_view); //--> instantiate the reccler view
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // --> sets the linear LayourManager
 
+
+
         taskRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, final int position) {
@@ -194,6 +201,29 @@ public class TaskActivity extends AppCompatActivity{
         updateUI();  //--> initializes the adapter
 
     }
+
+
+
+    public void createNotification() {
+
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(getApplicationContext());
+        taskStackBuilder.addParentStack(TaskActivity.this);
+        //taskStackBuilder.addNextIntent(TaskActivity.this);
+
+        PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(123, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder nbuilder = new NotificationCompat.Builder(this);
+        nbuilder.setContentTitle("You have a task in less than 3 days");
+        nbuilder.setContentText("Please check the taskManager for more details. Let your friends know that you got this!");
+        nbuilder.setSmallIcon(R.drawable.ic_stat_name);
+
+        nbuilder.setContentIntent(pendingIntent);
+
+        Notification notification = nbuilder.build();
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.notify(1,notification);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -202,6 +232,9 @@ public class TaskActivity extends AppCompatActivity{
         //fetch date from database
         // check for expiration and show push notification.
 
+        // upon notification cancel this after calling the createNotification method
+//        NotificationManager nm  = getSystemService(NOTIFICATION_SERVICE);
+//        nm.cancel(1);
     }
 
 
