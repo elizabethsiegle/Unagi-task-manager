@@ -265,7 +265,7 @@ public class TaskActivity extends AppCompatActivity{
                                 Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
                                 cal.add(Calendar.DATE, days +1); //due date
                                 format = new SimpleDateFormat("MM d, yyyy");
-                                String deadlineDay = format.format(cal.getTime());
+                                //String deadlineDay = format.format(cal.getTime());
                                 if(cal.getTime() == curr.getTime()) {
                                     //task expired
                                     //Toast.makeText(TaskActivity.this, "task expired, shame tweet " + priority, Toast.LENGTH_LONG).show();
@@ -275,7 +275,7 @@ public class TaskActivity extends AppCompatActivity{
                                 }
 
                                 //2- Create a Task object
-                                Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
+                                //Task newTask = new Task(taskName,taskDescription,days, priority, deadlineDay);
 
                                 //3- Add task object to the ArrayList   tasksLists;
                                 tasksList.add(newTask);
